@@ -1,21 +1,24 @@
 // binconvert.cpp : Functions related to the conversion of binary numbers in the IEEE754 Standard.
 //
-#include <iostream>
-double dec2bin() {
-	std::cout << "Hello dec2bin.\n"; 
-	return 0;
+#include "binaryf.h"
+
+
+const std::string float2bin(const float floatp) {
+	fval input;
+
+	input.flt = floatp;
+	std::bitset<sizeof(float) * CHAR_BIT > fbits(input.intval);
+	return fbits.to_string<char, std::char_traits<char>, std::allocator<char>>();
 }
-double bin2dec() {
-	std::cout << "Hello bin2dec.\n";
-	return 0;
+const float bin2float(const std::string& binString) {
+	std::cout << "Hello bin2float.\n";
+	return 0.0;
 }
 
 double binAdd(double a, double b) {
-	std::cout << "Hello binAdd.\n";
 	return 0;
 }
 
 double binMult(double a, double b) {
-	std::cout << "Hello binMult.\n";
 	return 0;
 }

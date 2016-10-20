@@ -5,9 +5,10 @@
 // Main function for running program and testing binary conversions.
 int main()
 {
-	std::cout << "Hello World.\n";
-	bin2dec();
-	dec2bin();
-	binAdd(20,20);
-	binMult(20, 20);
+	float floatInput = 0.2;
+	
+	std::cout << "Floating Point Binary Program ::.\n\n";
+	std::cout << "Enter value for float: ";
+	std::cin >> floatInput;
+	std::cout << "float2bin : " << float2bin(floatInput) << "\n";
 }
