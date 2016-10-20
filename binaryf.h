@@ -1,4 +1,4 @@
-// binconvert.h : Functions related to the conversion of binary numbers in the IEEE754 Standard.
+// binaryf.h : Functions related to the conversion and operation of binary numbers in the IEEE754 Standard.
 //
 #pragma once
 

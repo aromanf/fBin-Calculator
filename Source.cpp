@@ -1,5 +1,5 @@
 #include <iostream>
-#include "binconvert.h"
+#include "binaryf.h"
 
 
 // Main function for running program and testing binary conversions.

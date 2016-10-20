@@ -18,12 +18,12 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="binconvert.cpp">
+    <ClCompile Include="binaryf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="binconvert.h">
+    <ClInclude Include="binaryf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
