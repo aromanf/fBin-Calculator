@@ -10,7 +10,7 @@ union fval {
 	int intval;
 };
 
-const std::string float2bin(const float floatp);
+const std::string float2bin(int);
 const float bin2float(const std::string& binString);
 double binAdd(double, double);
 double binMult(double, double);
