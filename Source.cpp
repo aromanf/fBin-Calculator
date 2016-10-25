@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
-#include "binaryf.h"
+#include "fBinaryConverter.h"
 
 // Main function for running program and testing binary conversions.
 
@@ -17,9 +17,15 @@ int main()
 
 	std::cout << "Enter value for floating point: ";
 	std::cin >> input;
-	rep = float2fbin(input);
-
+	fBinaryConverter a;
+	fBinaryConverter b(23,5);
+	rep = a.float2fbin(input);
 	std::cout << "Floating point representation:\n" << rep << "\n";
+
+	rep = b.float2fbin(input);
+	std::cout << "Floating point representation:\n" << rep << "\n";
+
+	
 
 
 

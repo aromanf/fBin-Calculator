@@ -18,16 +18,25 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="binaryf.cpp">
+    <ClCompile Include="FbinaryConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fBinaryCalculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="binaryf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="trim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fBinaryConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fBinaryCalculator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

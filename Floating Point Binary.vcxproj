@@ -142,12 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="binaryf.cpp" />
+    <ClCompile Include="fBinaryCalculator.cpp" />
+    <ClCompile Include="FbinaryConverter.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="binaryf.h" />
+    <ClInclude Include="fBinaryCalculator.h" />
+    <ClInclude Include="fBinaryConverter.h" />
     <ClInclude Include="trim.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
