@@ -10,10 +10,13 @@ union fval {
 	int intval;
 };
 
+const std::string int2bin(int n);
 const std::string float2bin(int);
 const float bin2float(const std::string& binString);
 double binAdd(double, double);
 double binMult(double, double);
+
+short getFractionBinLen();
 
 
 

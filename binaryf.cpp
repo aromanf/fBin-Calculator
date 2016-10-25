@@ -1,9 +1,56 @@
 // binconvert.cpp : Functions related to the conversion of binary numbers in the IEEE754 Standard.
 //
+#pragma once
 #include "binaryf.h"
+#include "trim.h"
 static short MANTRISSA_LENGTH = 23, EXPONENT_LENGTH = 8;
 short fractionBinaryLength = 0;
 short integerBinaryLength = 0;
+
+const std::string int2bin(int n) {
+/*	std::string s = "";
+	int i, j = 0;
+
+	for (i = 1; input >= i; i *= 2);
+	if (i == 1) return "0";
+
+	i /= 2;
+	do {
+		if (input >= i) {
+			s += "1";
+			input -= i;
+		}
+		else
+			s += "0";
+
+		//			if (++j == 3) {
+		//				s += " ";
+		//				j = 0;
+		//			}
+
+		i /= 2;
+		integerBinaryLength++;
+	} while (i > 1);
+
+	s = trim(s);
+
+	return s; */
+
+	std::string res;
+
+	while (n)
+	{
+		res.push_back((n & 1) + '0');
+		n >>= 1;
+	}
+
+	if (res.empty())
+		res = "0";
+	else
+		std::reverse(res.begin(), res.end());
+
+	return res;
+}
 
 const std::string float2bin(int input) {
 	std::string s = "", t;
@@ -56,4 +103,9 @@ double binAdd(double a, double b) {
 
 double binMult(double a, double b) {
 	return 0;
+}
+
+short getFractionBinLen()
+{
+	return fractionBinaryLength;
 }

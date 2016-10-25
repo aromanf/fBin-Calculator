@@ -26,5 +26,8 @@
     <ClInclude Include="binaryf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="trim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
