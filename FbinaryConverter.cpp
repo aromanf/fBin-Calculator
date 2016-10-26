@@ -58,58 +58,30 @@
 			std::reverse(res.begin(), res.end());
 
 		return res;
-
-		/*	std::string s = "";
-		int i, j = 0;
-
-		for (i = 1; input >= i; i *= 2);
-		if (i == 1) return "0";
-
-		i /= 2;
-		do {
-		if (input >= i) {
-		s += "1";
-		input -= i;
-		}
-		else
-		s += "0";
-
-		//			if (++j == 3) {
-		//				s += " ";
-		//				j = 0;
-		//			}
-
-		i /= 2;
-		integerBinaryLength++;
-		} while (i > 1);
-
-		s = trim(s);
-
-		return s; */
 	}
 
 	const std::string fBinaryConverter::float2bin(int input) {
 		std::string s = "", t;
 		int ceiling, i = 0, j = 0, k;
-		std::cout << "float2Bin(" << input << ")\n";
+		//std::cout << "float2Bin(" << input << ")\n";
 
 		if (input == 0) return "0";
 
 		for (ceiling = 10; input >= ceiling; ceiling *= 10);
-		std::cout << "Ceiling: " << ceiling << "\n";
+		//std::cout << "Ceiling: " << ceiling << "\n";
 
 		while (input > 0 && i <= MANTRISSA_LENGTH) {
 			for (k = input, t = ""; k < ceiling / 10; k *= 10, t += "0");
-			std::cout << "0." << t << input << " * 2 = ";
+			//std::cout << "0." << t << input << " * 2 = ";
 			j = input * 2;
 
 			if (j >= ceiling) {
 				for (k = j, t = ""; k - ceiling < ceiling / 10; k *= 10, t += "0");
-				std::cout << "1." << t << (j - ceiling) << "\n";
+				//std::cout << "1." << t << (j - ceiling) << "\n";
 			}
 			else {
 				for (k = j, t = ""; k < ceiling / 10; k *= 10, t += "0");
-				std::cout << "0." << t << j << "\n";
+				//std::cout << "0." << t << j << "\n";
 			}
 
 			input *= 2;
@@ -136,14 +108,15 @@
 		std::cout << "fractionPart = " << fractionPart << "\n";
 
 		integerPart = abs(integerPart);
-		std::cout << "abs : " << integerPart << "\n";
+		//std::cout << "abs : " << integerPart << "\n";
 		integerBinary = int2bin(integerPart);
 		fractionBinary = float2bin(fractionPart);
 
 		//Display in Binary
 		std::cout << integerPart << "." << fractionPart << " in binary: "
-			<< "\n" << integerBinary << "." << fractionBinary << "\n";
+			<< integerBinary << "." << fractionBinary << "\n";
 
+		// Create exponent in decimal
 		if (integerPart != 0)
 			exponent = 127 + integerBinary.length() - 1;
 		else if (fractionPart != 0)
@@ -152,11 +125,15 @@
 			exponent = 0;
 
 		//setting bit sign
-		representation = (input[0] == '-' ? "1 " : "0 ");
+		representation = (input[0] == '-' ? "1" : "0"); // space was after the number sign bits
 
 		//representation loop
-		for (s = "", i = sizeof(int2bin(exponent)); i < EXPONENT_LENGTH; s += "0", i++);
-		representation += s + int2bin(exponent) + " ";
+		std::string expBin = int2bin(exponent);
+		if (expBin.size() > EXPONENT_LENGTH)
+			std::cout << "Error. Required exponent " << expBin.size() << " is higher than the exponent entered : " << EXPONENT_LENGTH << ".\n";
+
+		for (s = "", i = expBin.size(); i < EXPONENT_LENGTH; s += "0", i++);
+		representation += s + int2bin(exponent); //space was here at the end. Converted exponent into binary and added to the representation.
 
 		if (integerPart != 0) {
 			s = integerBinary + fractionBinary;
