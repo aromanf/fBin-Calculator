@@ -10,7 +10,7 @@ int main()
 {
 	
 	std::string input; 
-	std::string repA = "00111110110011001100110011001101";
+	std::string repA = "10111110110011001100110011001101";
 	std::string repB = "00111111000110011001100110011010";
 	//short n; // n : bits of mantissa. m < n.
 	//short m; // m : bits of exponent.

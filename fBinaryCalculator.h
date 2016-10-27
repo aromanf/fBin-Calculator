@@ -27,7 +27,11 @@ public:
 
 	// Adds the mantissa of a and b.
 	std::string addMantissa(std::string ainput, std::string binput);
+	// A addMantissa with overflow warning turned off as Two's Complement will cause it anyway.
+	std::string addsMantissa(std::string ainput, std::string binput);
 	// Substract two mantissa values.
-	std::string subMantissa();
+	std::string subMantissa(std::string ainput, std::string binput);
+	// Small convert for turning a binary into a decimal for light comparisons.
+	long calbconvert(std::string binput);
 };
 

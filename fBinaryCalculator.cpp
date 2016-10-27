@@ -85,7 +85,8 @@ fBinaryCalculator::binnum fBinaryCalculator::initBinaryVars(binnum input) {
 
 	std::cout << " Mantissa : " << x.mantissa << "\n";
 
-
+	x.expdec = calbconvert(x.exponent);
+	/*
 	long num = stoi(x.exponent);
 	long bin = num;
 	long rem, dec = 0, base = 1;
@@ -94,12 +95,12 @@ fBinaryCalculator::binnum fBinaryCalculator::initBinaryVars(binnum input) {
 		dec = dec + rem * base;
 		base = base * 2;
 		num = num / 10;
-	}
+	} */
 	
 	int bias = pow(2, m - 1) - 1;
 
-	x.expbias = dec - bias;
-	std::cout << " The decimal equivalent of exponent " << bin << " : " << dec << std::endl;
+	x.expbias = x.expdec - bias;
+	std::cout << " The decimal equivalent of exponent " << x.exponent << " : " << x.expdec << std::endl;
 	std::cout << " Exponent with Bias: 2^" << x.expbias << "\n";
 
 	std::string s;
@@ -129,7 +130,7 @@ std::string fBinaryCalculator::fBinAdd() {
 		if (a.expbias > b.expbias) {
 			res.expbias = b.expbias;
 			std::cout << "Result Exponent with bias > = " << res.expbias << std::endl;
-			res.mantissa = subMantissa();
+			res.mantissa = addMantissa(a.mantissa, b.mantissa);
 
 			std::cout << " FP Binary in scientific notation : ";
 			if (res.sign == "0")
@@ -143,7 +144,7 @@ std::string fBinaryCalculator::fBinAdd() {
 		if (a.expbias < b.expbias) {
 			res.expbias = b.expbias;
 			std::cout << "Result Exponent with bias < = " << res.expbias << std::endl;
-			res.mantissa = subMantissa();
+			res.mantissa = addMantissa(a.mantissa, b.mantissa);
 
 			std::cout << " FP Binary in scientific notation : ";
 			if (res.sign == "0")
@@ -156,7 +157,7 @@ std::string fBinaryCalculator::fBinAdd() {
 		else {
 			res.expbias = a.expbias;
 			std::cout << "Result Exponent with bias == " << res.expbias << std::endl;
-			res.mantissa = subMantissa();
+			res.mantissa = addMantissa(a.mantissa,b.mantissa);
 
 			std::cout << " FP Binary in scientific notation : ";
 			if (res.sign == "0")
@@ -171,6 +172,60 @@ std::string fBinaryCalculator::fBinAdd() {
 	if (a.sign == "1" && b.sign == "1") {
 		res.sign = "1";
 		std::cout << "Result sign = " << res.sign << std::endl;
+
+		if (a.expbias > b.expbias) {
+			res.expbias = b.expbias;
+			std::cout << "Result Exponent with bias > = " << res.expbias << std::endl;
+			res.mantissa = addMantissa(a.mantissa, b.mantissa);
+
+			std::cout << " FP Binary in scientific notation : ";
+			if (res.sign == "0")
+				std::cout << "+ ";
+			else
+				std::cout << "- ";
+			std::cout << "1." << res.mantissa << " x 2^" << res.expbias << std::endl;
+		}
+
+		if (a.expbias < b.expbias) {
+			res.expbias = b.expbias;
+			std::cout << "Result Exponent with bias < = " << res.expbias << std::endl;
+			res.mantissa = addMantissa(a.mantissa, b.mantissa);
+
+			std::cout << " FP Binary in scientific notation : ";
+			if (res.sign == "0")
+				std::cout << "+ ";
+			else
+				std::cout << "- ";
+			std::cout << "1." << res.mantissa << " x 2^" << res.expbias << std::endl;
+
+		}
+		else {
+			res.expbias = a.expbias;
+			std::cout << "Result Exponent with bias == " << res.expbias << std::endl;
+			res.mantissa = subMantissa(a.mantissa, b.mantissa);
+
+			std::cout << " FP Binary in scientific notation : ";
+			if (res.sign == "0")
+				std::cout << "+ ";
+			else
+				std::cout << "- ";
+			std::cout << "1." << res.mantissa << " x 2^" << res.expbias << std::endl;
+		}
+	}
+
+	if ((a.sign == "0" && b.sign == "1") || (a.sign == "1" && b.sign == "0")) {
+		/*long ad = 1;//calbconvert(a.mantissa);
+		long bd = 2;//calbconvert(b.mantissa);
+		if (ad > bd && a.sign == "0")
+			res.sign = "0";
+		if (ad > bd && a.sign == "1")
+			res.sign = "1";
+		if (bd > ad && a.sign == "0")
+			res.sign = "0";
+		if (bd > ad && a.sign == "1")
+			res.sign = "1";
+		std::cout << "res.sign = " << res.sign << "\n"; */
+		subMantissa(a.mantissa, b.mantissa);
 	}
 	return "";
 }
@@ -197,8 +252,7 @@ std::string fBinaryCalculator::addMantissa(std::string ainput, std::string binpu
 				rmantissa[i] = '1';
 				carry = 1;
 			}
-		if (i == 0 && carry == 1)
-			std::cout << "Overflow.\n";
+		
 		if (amantissa[i] == '1' && bmantissa[i] == '1') {
 		//	std::cout << "Carry = " << carry << "\n";
 			if (carry == 0) {
@@ -238,6 +292,73 @@ std::string fBinaryCalculator::addMantissa(std::string ainput, std::string binpu
 		std::cout << " = " << rmantissa[i];
 		
 	}
+	if (carry == 1)
+		std::cout << "\n\nCarry = 1 at end of operation. Overflow has occured.\n";
+	std::cout << "\nabin : " << amantissa << std::endl;
+	std::cout << "bbin : " << bmantissa << std::endl;
+	std::cout << "________________________________\n";
+	std::cout << "RBin : " << rmantissa << std::endl;
+	return rmantissa;
+}
+
+std::string fBinaryCalculator::addsMantissa(std::string ainput, std::string binput)
+{
+	int carry = 0;
+	std::string amantissa = ainput;
+	std::string bmantissa = binput;
+	std::string rmantissa = amantissa;
+	for (int i = amantissa.size() - 1; i >= 0; i--) {
+		std::cout << "\n Carry = " << carry << "  ";
+		//std::cout << "bbin : " << b.mantissa[i] << std::endl;
+		if (amantissa[i] == '1' && bmantissa[i] == '1') {
+			//std::cout << "Carry = " << carry << "\n";
+			if (carry == 1) {
+				//std::cout << "trigger 1+1 C=1\n";
+				rmantissa[i] = '1';
+				carry = 1;
+			}
+
+			if (amantissa[i] == '1' && bmantissa[i] == '1') {
+				//	std::cout << "Carry = " << carry << "\n";
+				if (carry == 0) {
+					//std::cout << "trigger 1+1 C=0\n";
+					rmantissa[i] = '0';
+					carry = 1;
+				}
+			}
+
+
+		}
+		if (amantissa[i] == '0' && bmantissa[i] == '0' && carry == 0) {
+			std::cout << "trigger 0+0 C=0\n";
+			rmantissa[i] = '0';
+			carry = 0;
+		}
+		if (amantissa[i] == '0' && bmantissa[i] == '0' && carry == 1) {
+			std::cout << "trigger 0+0 C=1\n";
+			rmantissa[i] = '1';
+			carry = 0;
+		}
+		if ((amantissa[i] == '1' && bmantissa[i] == '0' && carry == 0)
+			|| (amantissa[i] == '0' && bmantissa[i] == '1' && carry == 0)) {
+			//std::cout << "trigger 1+0 OR 0+1 C=0\n";
+			rmantissa[i] = '1';
+			carry = 0;
+		}
+		if ((amantissa[i] == '1' && bmantissa[i] == '0' && carry == 1)
+			|| (amantissa[i] == '0' && bmantissa[i] == '1' && carry == 1)) {
+			//std::cout << "trigger 1+0 OR 0+1 C=1\n";
+			rmantissa[i] = '0';
+			carry = 1;
+		}
+
+		std::cout << "" << amantissa[i];
+		std::cout << " + " << bmantissa[i];
+		std::cout << " = " << rmantissa[i];
+
+	}
+	//if (carry == 1)
+		//std::cout << "\n\nCarry = 1 at end of operation. Overflow has occured.\n";
 	std::cout << "\nabin : " << amantissa << std::endl;
 	std::cout << "bbin : " << bmantissa << std::endl;
 	std::cout << "________________________________\n";
@@ -247,13 +368,21 @@ std::string fBinaryCalculator::addMantissa(std::string ainput, std::string binpu
 
 
 // Substract two mantissa values.
-std::string fBinaryCalculator::subMantissa()
+std::string fBinaryCalculator::subMantissa(std::string ainput, std::string binput)
 {
-	std::string amantissa = a.mantissa;
-	std::string bmantissa = b.mantissa;
-	std::string rmantissa = a.mantissa;
-	std::string omantissa = b.mantissa; // Using this string to contain only a 1.
+	//long bdec = calbconvert(binput);
+	std::string amantissa = ainput;
+	std::string bmantissa = binput;
+	std::string rmantissa = ainput;
+	std::string omantissa = binput; // Using this string to contain only a 1.
 	std::string tmantissa = " "; // Two's Complement of B.
+
+	// If amantissa is smaller than bmantissa then invert to avoid a negative overflow.
+	//if (adec < bdec) {
+	//	amantissa = bmantissa;
+	//	bmantissa = rmantissa;
+	//}
+		
 
 	// Two's Complement
 	for (int i = 0; i < bmantissa.size(); i++) {
@@ -280,5 +409,32 @@ std::string fBinaryCalculator::subMantissa()
 	// Add amantissa and Two's Complemented Mantissa to get result of substraction.
 	
 	
-	return addMantissa(amantissa, tmantissa);
+	return addsMantissa(amantissa, tmantissa);
+}
+
+
+// Small convert for turning a binary into a decimal for light comparisons.
+long fBinaryCalculator::calbconvert(std::string calinput)
+{
+	long num = stoi(calinput);
+	long bin = num;
+	long rem, dec = 0, base = 1;
+	while (num > 0) {
+		rem = num % 10;
+		dec = dec + rem * base;
+		base = base * 2;
+		num = num / 10;
+	}
+	return dec;
+
+	/*
+	long num = stoi(x.exponent);
+	long bin = num;
+	long rem, dec = 0, base = 1;
+	while (num > 0) {
+	rem = num % 10;
+	dec = dec + rem * base;
+	base = base * 2;
+	num = num / 10;
+	} */
 }
