@@ -3,15 +3,9 @@
 #include <string>
 class fBinaryCalculator
 {
-public:
-	//fBinaryCalculator(std::string a, std::string b);
-	fBinaryCalculator(std::string ainput, std::string binput, short m, short n);
-	~fBinaryCalculator();
-	double fBinAdd(double, double);
-	double fBinMult(double, double);
 private:
-	std::string repA;
-	std::string repB;
+	short m; // Max Exponent  
+	short n; // Max Mantissa 
 	struct binnum {
 		std::string rep;
 		std::string mantissa;
@@ -21,5 +15,15 @@ private:
 		long expdec;
 		long expbias;
 	};
+public:
+	//fBinaryCalculator(std::string a, std::string b);
+	fBinaryCalculator(std::string ainput, std::string binput, short me, short nm);
+	~fBinaryCalculator();
+	std::string fBinAdd(double, double);
+	std::string fBinMult(double, double);
+	binnum fBinaryCalculator::initBinaryVars(binnum input);
+
+	binnum a, b;
+
 };
 
