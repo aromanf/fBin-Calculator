@@ -95,7 +95,7 @@ fBinaryCalculator::binnum fBinaryCalculator::initBinaryVars(binnum input) {
 		base = base * 2;
 		num = num / 10;
 	}
-
+	
 	int bias = pow(2, m - 1) - 1;
 
 	x.expbias = dec - bias;
@@ -129,19 +129,41 @@ std::string fBinaryCalculator::fBinAdd() {
 		if (a.expbias > b.expbias) {
 			res.expbias = b.expbias;
 			std::cout << "Result Exponent with bias > = " << res.expbias << std::endl;
-			addMantissa();
+			res.mantissa = subMantissa();
+
+			std::cout << " FP Binary in scientific notation : ";
+			if (res.sign == "0")
+				std::cout << "+ ";
+			else
+				std::cout << "- ";
+			std::cout << "1." << res.mantissa << " x 2^" << res.expbias << std::endl;
+
 			
 		}
 		if (a.expbias < b.expbias) {
 			res.expbias = b.expbias;
 			std::cout << "Result Exponent with bias < = " << res.expbias << std::endl;
-			addMantissa();
+			res.mantissa = subMantissa();
+
+			std::cout << " FP Binary in scientific notation : ";
+			if (res.sign == "0")
+				std::cout << "+ ";
+			else
+				std::cout << "- ";
+			std::cout << "1." << res.mantissa << " x 2^" << res.expbias << std::endl;
 
 		}
 		else {
 			res.expbias = a.expbias;
 			std::cout << "Result Exponent with bias == " << res.expbias << std::endl;
-			addMantissa();
+			res.mantissa = subMantissa();
+
+			std::cout << " FP Binary in scientific notation : ";
+			if (res.sign == "0")
+				std::cout << "+ ";
+			else
+				std::cout << "- ";
+			std::cout << "1." << res.mantissa << " x 2^" << res.expbias << std::endl;
 		}
 			
 	}
@@ -159,14 +181,16 @@ std::string fBinaryCalculator::fBinMult(double, double) {
 
 
 // Adds the mantissa of a and b.
-std::string fBinaryCalculator::addMantissa()
+std::string fBinaryCalculator::addMantissa(std::string ainput, std::string binput)
 {
 	int carry=0;
-	std::string rmantissa = a.mantissa;
-	for (int i = a.mantissa.size()-1; i >= 0; i--) {
+	std::string amantissa = ainput;
+	std::string bmantissa = binput;
+	std::string rmantissa = amantissa;
+	for (int i = amantissa.size()-1; i >= 0; i--) {
 		std::cout << "\n Carry = " << carry << "  ";
 		//std::cout << "bbin : " << b.mantissa[i] << std::endl;
-		if (a.mantissa[i] == '1' && b.mantissa[i] == '1') {
+		if (amantissa[i] == '1' && bmantissa[i] == '1') {
 			//std::cout << "Carry = " << carry << "\n";
 			if (carry == 1) {
 				//std::cout << "trigger 1+1 C=1\n";
@@ -175,7 +199,7 @@ std::string fBinaryCalculator::addMantissa()
 			}
 		if (i == 0 && carry == 1)
 			std::cout << "Overflow.\n";
-		if (a.mantissa[i] == '1' && b.mantissa[i] == '1') {
+		if (amantissa[i] == '1' && bmantissa[i] == '1') {
 		//	std::cout << "Carry = " << carry << "\n";
 			if (carry == 0) {
 				//std::cout << "trigger 1+1 C=0\n";
@@ -186,37 +210,75 @@ std::string fBinaryCalculator::addMantissa()
 		
 			
 		}
-		if (a.mantissa[i] == '0' && b.mantissa[i] == '0' && carry == 0) {
-			//std::cout << "trigger 0+0 C=0\n";
+		if (amantissa[i] == '0' && bmantissa[i] == '0' && carry == 0) {
+			std::cout << "trigger 0+0 C=0\n";
 			rmantissa[i] = '0';
 			carry = 0;
 		}
-		if (a.mantissa[i] == '0' && b.mantissa[i] == '0' && carry == 1) {
-			//std::cout << "trigger 0+0 C=1\n";
+		if (amantissa[i] == '0' && bmantissa[i] == '0' && carry == 1) {
+			std::cout << "trigger 0+0 C=1\n";
 			rmantissa[i] = '1';
 			carry = 0;
 		}
-		if ((a.mantissa[i] == '1' && b.mantissa[i] == '0' && carry == 0) 
-			|| (a.mantissa[i] == '0' && b.mantissa[i] == '1' && carry == 0)) {
+		if ((amantissa[i] == '1' && bmantissa[i] == '0' && carry == 0) 
+			|| (amantissa[i] == '0' && bmantissa[i] == '1' && carry == 0)) {
 			//std::cout << "trigger 1+0 OR 0+1 C=0\n";
 			rmantissa[i] = '1';
 			carry = 0;
 		}
-		if ((a.mantissa[i] == '1' && b.mantissa[i] == '0' && carry == 1)
-			|| (a.mantissa[i] == '0' && b.mantissa[i] == '1' && carry == 1)) {
+		if ((amantissa[i] == '1' && bmantissa[i] == '0' && carry == 1)
+			|| (amantissa[i] == '0' && bmantissa[i] == '1' && carry == 1)) {
 			//std::cout << "trigger 1+0 OR 0+1 C=1\n";
 			rmantissa[i] = '0';
 			carry = 1;
 		}
 			
-		std::cout << "" << a.mantissa[i];
-		std::cout << " + " << b.mantissa[i];
+		std::cout << "" << amantissa[i];
+		std::cout << " + " << bmantissa[i];
 		std::cout << " = " << rmantissa[i];
 		
 	}
-	std::cout << "\nabin : " << a.mantissa << std::endl;
-	std::cout << "bbin : " << b.mantissa << std::endl;
+	std::cout << "\nabin : " << amantissa << std::endl;
+	std::cout << "bbin : " << bmantissa << std::endl;
 	std::cout << "________________________________\n";
 	std::cout << "RBin : " << rmantissa << std::endl;
 	return rmantissa;
+}
+
+
+// Substract two mantissa values.
+std::string fBinaryCalculator::subMantissa()
+{
+	std::string amantissa = a.mantissa;
+	std::string bmantissa = b.mantissa;
+	std::string rmantissa = a.mantissa;
+	std::string omantissa = b.mantissa; // Using this string to contain only a 1.
+	std::string tmantissa = " "; // Two's Complement of B.
+
+	// Two's Complement
+	for (int i = 0; i < bmantissa.size(); i++) {
+		std::cout << "B[" << i << "]: " << bmantissa[i] << "\n";
+		if (bmantissa[i] == '0')
+			bmantissa[i] = '1';
+		else
+			bmantissa[i] = '0';
+		std::cout << "B[" << i << "] after change: " << bmantissa[i] << "\n";
+	}
+
+	// Turn omantissa into only a 1
+	for (int i = 0; i < bmantissa.size(); i++) 
+		omantissa[i] = '0';
+	omantissa[omantissa.size()-1] = '1';
+	
+	// Add one to inverted b to complete Two's Complement
+	addMantissa(bmantissa, omantissa);
+	std::cout << "Mantissa with a one : " << omantissa << "\n";
+	std::cout << "b on regular : " << b.mantissa << "\n";
+	tmantissa = addMantissa(bmantissa, omantissa);
+	std::cout << "b on Two's Complement : " << tmantissa << "\n";
+
+	// Add amantissa and Two's Complemented Mantissa to get result of substraction.
+	
+	
+	return addMantissa(amantissa, tmantissa);
 }

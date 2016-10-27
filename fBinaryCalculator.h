@@ -26,6 +26,8 @@ public:
 	binnum a, b;
 
 	// Adds the mantissa of a and b.
-	std::string addMantissa();
+	std::string addMantissa(std::string ainput, std::string binput);
+	// Substract two mantissa values.
+	std::string subMantissa();
 };
 
