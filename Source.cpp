@@ -9,11 +9,13 @@
 int main()
 {
 	
-	std::string input, repA, repB;
-	short n; // n : bits of mantissa. m < n.
-	short m; // m : bits of exponent.
+	std::string input; 
+	std::string repA = "00111110110011001100110011001101";
+	std::string repB = "00111111000110011001100110011010";
+	//short n; // n : bits of mantissa. m < n.
+	//short m; // m : bits of exponent.
 
-	
+	/*
 	std::cout << "Floating Point Binary Calculator :\n\n";
 	std::cout << "Enter bits of mantissa ( 8 to 64 ) : ";
 	std::cin >> n;
@@ -30,8 +32,9 @@ int main()
 
 	repB = b.float2fbin(input);
 	std::cout << "Floating point representation: " << repB << "\n\n";
-
-	fBinaryCalculator calculator(repA,repB,n,m);
+	*/
+	fBinaryCalculator calculator(repA,repB);
+	calculator.fBinAdd();
 	
 	return 0;
 }

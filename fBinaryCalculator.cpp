@@ -3,13 +3,30 @@
 #include <string>
 
 
-//fBinaryCalculator::fBinaryCalculator(std::string a, std::string b) {
+fBinaryCalculator::fBinaryCalculator(std::string ainput, std::string binput) {
+	n = 23;
+	m = 8;
+	a.rep = ainput;
+	a.mantissa = "";
+	a.exponent = "";
+	a.sign = "";
+	a.nbin = "";
+	a.expdec = 0;
+	a.expbias = 0;
 
-//}
+	b.rep = binput;
+	b.mantissa = "";
+	b.exponent = "";
+	b.sign = "";
+	b.nbin = "";
+	b.expdec = 0;
+	b.expbias = 0;
+
+	a = initBinaryVars(a);
+	b = initBinaryVars(b);
+}
 fBinaryCalculator::fBinaryCalculator(std::string ainput, std::string binput, short nma, short me)
 {
-	
-	binnum a, b;
 	n = nma;
 	m = me;
 	a.rep = ainput;
@@ -20,7 +37,7 @@ fBinaryCalculator::fBinaryCalculator(std::string ainput, std::string binput, sho
 	a.expdec = 0;
 	a.expbias = 0;
 
-	b.rep = ainput;
+	b.rep = binput;
 	b.mantissa = "";
 	b.exponent = "";
 	b.sign = "";
@@ -43,13 +60,12 @@ fBinaryCalculator::binnum fBinaryCalculator::initBinaryVars(binnum input) {
 	binnum x = input;
 
 	x.rep = input.rep;
-	
 	x.sign, x.exponent, x.mantissa = "";
 
 	//Separate sign
 	x.sign = x.rep[0];
 	std::cout << "A : " << x.rep << "\n";
-	std::cout << " size : " << x.rep.size()+1 << "\n";
+	std::cout << " size : " << x.rep.size() << "\n";
 	if (x.sign == "0")
 		std::cout << " Sign : +\n";
 	else
@@ -105,11 +121,102 @@ fBinaryCalculator::binnum fBinaryCalculator::initBinaryVars(binnum input) {
 	return x; 
 }
 
-std::string fBinaryCalculator::fBinAdd(double a, double b) {
+std::string fBinaryCalculator::fBinAdd() {
+	binnum res;
+	if (a.sign == "0" && b.sign == "0") {
+		res.sign = "0";
+		std::cout << "Result sign = " << res.sign << std::endl;
+		if (a.expbias > b.expbias) {
+			res.expbias = b.expbias;
+			std::cout << "Result Exponent with bias > = " << res.expbias << std::endl;
+			addMantissa();
+			
+		}
+		if (a.expbias < b.expbias) {
+			res.expbias = b.expbias;
+			std::cout << "Result Exponent with bias < = " << res.expbias << std::endl;
+			addMantissa();
 
+		}
+		else {
+			res.expbias = a.expbias;
+			std::cout << "Result Exponent with bias == " << res.expbias << std::endl;
+			addMantissa();
+		}
+			
+	}
+
+	if (a.sign == "1" && b.sign == "1") {
+		res.sign = "1";
+		std::cout << "Result sign = " << res.sign << std::endl;
+	}
 	return "";
 }
 
 std::string fBinaryCalculator::fBinMult(double, double) {
 	return "";
+}
+
+
+// Adds the mantissa of a and b.
+std::string fBinaryCalculator::addMantissa()
+{
+	int carry=0;
+	std::string rmantissa = a.mantissa;
+	for (int i = a.mantissa.size()-1; i >= 0; i--) {
+		std::cout << "\n Carry = " << carry << "  ";
+		//std::cout << "bbin : " << b.mantissa[i] << std::endl;
+		if (a.mantissa[i] == '1' && b.mantissa[i] == '1') {
+			//std::cout << "Carry = " << carry << "\n";
+			if (carry == 1) {
+				//std::cout << "trigger 1+1 C=1\n";
+				rmantissa[i] = '1';
+				carry = 1;
+			}
+		if (i == 0 && carry == 1)
+			std::cout << "Overflow.\n";
+		if (a.mantissa[i] == '1' && b.mantissa[i] == '1') {
+		//	std::cout << "Carry = " << carry << "\n";
+			if (carry == 0) {
+				//std::cout << "trigger 1+1 C=0\n";
+				rmantissa[i] = '0';
+				carry = 1;
+			}
+		}
+		
+			
+		}
+		if (a.mantissa[i] == '0' && b.mantissa[i] == '0' && carry == 0) {
+			//std::cout << "trigger 0+0 C=0\n";
+			rmantissa[i] = '0';
+			carry = 0;
+		}
+		if (a.mantissa[i] == '0' && b.mantissa[i] == '0' && carry == 1) {
+			//std::cout << "trigger 0+0 C=1\n";
+			rmantissa[i] = '1';
+			carry = 0;
+		}
+		if ((a.mantissa[i] == '1' && b.mantissa[i] == '0' && carry == 0) 
+			|| (a.mantissa[i] == '0' && b.mantissa[i] == '1' && carry == 0)) {
+			//std::cout << "trigger 1+0 OR 0+1 C=0\n";
+			rmantissa[i] = '1';
+			carry = 0;
+		}
+		if ((a.mantissa[i] == '1' && b.mantissa[i] == '0' && carry == 1)
+			|| (a.mantissa[i] == '0' && b.mantissa[i] == '1' && carry == 1)) {
+			//std::cout << "trigger 1+0 OR 0+1 C=1\n";
+			rmantissa[i] = '0';
+			carry = 1;
+		}
+			
+		std::cout << "" << a.mantissa[i];
+		std::cout << " + " << b.mantissa[i];
+		std::cout << " = " << rmantissa[i];
+		
+	}
+	std::cout << "\nabin : " << a.mantissa << std::endl;
+	std::cout << "bbin : " << b.mantissa << std::endl;
+	std::cout << "________________________________\n";
+	std::cout << "RBin : " << rmantissa << std::endl;
+	return rmantissa;
 }
