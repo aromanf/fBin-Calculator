@@ -265,12 +265,12 @@ std::string fBinaryCalculator::addMantissa(std::string ainput, std::string binpu
 			
 		}
 		if (amantissa[i] == '0' && bmantissa[i] == '0' && carry == 0) {
-			std::cout << "trigger 0+0 C=0\n";
+			//std::cout << "trigger 0+0 C=0\n";
 			rmantissa[i] = '0';
 			carry = 0;
 		}
 		if (amantissa[i] == '0' && bmantissa[i] == '0' && carry == 1) {
-			std::cout << "trigger 0+0 C=1\n";
+			//std::cout << "trigger 0+0 C=1\n";
 			rmantissa[i] = '1';
 			carry = 0;
 		}
