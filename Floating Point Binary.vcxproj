@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClInclude Include="fBinaryCalculator.h" />
     <ClInclude Include="fBinaryConverter.h" />
-    <ClInclude Include="trim.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

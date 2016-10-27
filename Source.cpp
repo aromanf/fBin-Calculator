@@ -1,3 +1,11 @@
+/*********************************************************
+	Computer Architecture Project : Code 2
+	Written by Antonio F. Roman , Moises 
+    Source.cpp - Main function for converting decimal to 
+		binary numbers, and adding two binary 
+		representations. 
+**********************************************************/
+
 #include <iostream>
 #include <string>
 #include <stdlib.h>

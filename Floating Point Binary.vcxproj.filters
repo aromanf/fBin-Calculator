@@ -26,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="trim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="fBinaryConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>

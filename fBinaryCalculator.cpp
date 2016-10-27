@@ -1,12 +1,19 @@
+/*********************************************************
+Computer Architecture Project : Code 2
+Written by Antonio F. Roman , Moises
+fBinaryCalculator.cpp - Definition for 
+	fBinaryCalculator.h. Adds binary representations.
+**********************************************************/
 #include "fBinaryCalculator.h"
 #include <iostream>
 #include <string>
 
-
+// Constructor takes two string binary representations and initializes them. 
+// This constructor initializes the representation to a 32 bit representation.
 fBinaryCalculator::fBinaryCalculator(std::string ainput, std::string binput) {
-	n = 23;
-	m = 8;
-	a.rep = ainput;
+	n = 23; // Max Mantissa
+	m = 8; // Max Exponent
+	a.rep = ainput; 
 	a.mantissa = "";
 	a.exponent = "";
 	a.sign = "";
@@ -25,6 +32,9 @@ fBinaryCalculator::fBinaryCalculator(std::string ainput, std::string binput) {
 	a = initBinaryVars(a);
 	b = initBinaryVars(b);
 }
+
+// Constructor takes two string binary representations and initializes them. 
+// This constructor initializes the representation to a user defined mantissa and exponent.
 fBinaryCalculator::fBinaryCalculator(std::string ainput, std::string binput, short nma, short me)
 {
 	n = nma;
@@ -86,18 +96,8 @@ fBinaryCalculator::binnum fBinaryCalculator::initBinaryVars(binnum input) {
 	std::cout << " Mantissa : " << x.mantissa << "\n";
 
 	x.expdec = calbconvert(x.exponent);
-	/*
-	long num = stoi(x.exponent);
-	long bin = num;
-	long rem, dec = 0, base = 1;
-	while (num > 0) {
-		rem = num % 10;
-		dec = dec + rem * base;
-		base = base * 2;
-		num = num / 10;
-	} */
 	
-	int bias = pow(2, m - 1) - 1;
+	int bias = pow(2, m - 1) - 1; 
 
 	x.expbias = x.expdec - bias;
 	std::cout << " The decimal equivalent of exponent " << x.exponent << " : " << x.expdec << std::endl;
@@ -427,14 +427,5 @@ long fBinaryCalculator::calbconvert(std::string calinput)
 	}
 	return dec;
 
-	/*
-	long num = stoi(x.exponent);
-	long bin = num;
-	long rem, dec = 0, base = 1;
-	while (num > 0) {
-	rem = num % 10;
-	dec = dec + rem * base;
-	base = base * 2;
-	num = num / 10;
-	} */
+	
 }

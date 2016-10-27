@@ -1,3 +1,10 @@
+/*********************************************************
+Computer Architecture Project : Code 2
+Written by Antonio F. Roman , Moises
+fBinaryConverter.h - Declaration for
+fBinaryConverter.cpp. Converts decimal numbers to binary
+representations.
+**********************************************************/
 #pragma once
 #include <iostream>
 #include <string>
@@ -16,7 +23,11 @@ private:
 		long expbias;
 	};
 public:
+	// Constructor takes two string binary representations and initializes them. 
+	// This constructor initializes the representation to a 32 bit representation.
 	fBinaryCalculator(std::string ainput, std::string binput);
+	// Constructor takes two string binary representations and initializes them. 
+	// This constructor initializes the representation to a user defined mantissa and exponent.
 	fBinaryCalculator(std::string ainput, std::string binput, short me, short nm);
 	~fBinaryCalculator();
 	std::string fBinAdd();

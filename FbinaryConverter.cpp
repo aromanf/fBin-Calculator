@@ -1,10 +1,15 @@
 
-// binconvert.cpp : Functions related to the conversion of binary numbers in the IEEE754 Standard.
-//
+/*********************************************************
+Computer Architecture Project : Code 2
+Written by Antonio F. Roman , Moises
+fBinaryConverter.cpp - Definition for
+	fBinaryConverter.h. Converts decimal numbers to binary
+	representations.
+**********************************************************/
 #include <iostream>
 #include <string>
 #include "fBinaryConverter.h"
-#include "trim.h"
+
 
 
 	fBinaryConverter::fBinaryConverter() {
@@ -154,3 +159,19 @@
 	}
 
 
+
+
+	// Convert binary to decimal.
+	long fBinaryConverter::bin2dec(std::string calinput)
+	{
+		long num = stoi(calinput);
+		long bin = num;
+		long rem, dec = 0, base = 1;
+		while (num > 0) {
+			rem = num % 10;
+			dec = dec + rem * base;
+			base = base * 2;
+			num = num / 10;
+		}
+		return dec;
+	}

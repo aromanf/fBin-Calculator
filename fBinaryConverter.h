@@ -1,10 +1,16 @@
+/*********************************************************
+Computer Architecture Project : Code 2
+Written by Antonio F. Roman , Moises
+fBinaryConverter.cpp - Declaration for
+	fBinaryConverter.h. Converts decimal numbers to binary
+	representations.
+**********************************************************/
 #pragma once
 #include <string>
-// binaryf.h : Functions related to the conversion and operation of binary numbers in the IEEE754 Standard.
-//
+
 class fBinaryConverter {
 private:
-	short MANTRISSA_LENGTH, EXPONENT_LENGTH;
+	short MANTRISSA_LENGTH, EXPONENT_LENGTH; 
 	short fractionBinaryLength;
 	short integerBinaryLength;
 	std::string integerBinary, fractionBinary, representation, s;
@@ -18,6 +24,8 @@ public:
 	const std::string float2fbin(std::string);
 	
 	short getFractionBinLen();
+	// Convert binary to decimal.
+	long bin2dec(std::string calinput);
 };
 
 
